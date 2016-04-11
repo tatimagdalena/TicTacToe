@@ -1,0 +1,12 @@
+Dia 1:
+	Inicialmente, precisei descobrir como instalar Lua em meu computador, com sistema operacional Mac OS. Gastei um bom tempo com isso, pois inicialmente não estava conseguindo rodar por linha de comando com as instruções presentes no site de Lua. Por fim, instalei utilizando o Homebrew (brew.sh), conseguindo então rodar programas em Lua utilizando o comando “lua nome_do_arquivo.lua”.
+
+Dia 2:
+	Para me familiarizar com a linguagem Lua, já que nunca havia tido contato com ela antes, li alguma documentação de Lua e assisti alguns tutoriais em video. Achei mais fácil aprender com os tutoriais, uma vez que foi possível aprender o básico já aplicando em alguma coisa. O tutorial que mais segui foi a série de 5 videos intitulada “Intro to Programming in Lua”, do canal Spastic Kangaroo.
+
+Dia 3:
+	Passei um bom tempo tentando decidir o que fazer como programa. Optei por um jogo bem conhecido por todos, o “Jogo da Velha” (ou Tic Tac Toe, em inglês).
+	Com o programa definido, criei um repositório no github para controle de versão. O commit inicial possui um arquivo tictactoe.lua, e um arquivo README.md, com algumas informações mas ainda sem as regras de utilização do programa. 
+	Como foi a primeira vez que de fato comecei a fazer um código em Lua, inicialmente demorei um pouco para coisas simples. Uma dificuldade foi na hora de ler um número (opção do menu) e validá-lo, pois tentando ler com io.read("*number") o código estava entrando em um loop eterno. Após pesquisar, troquei para tonumber(io.read()) e funcionou.
+	Fiz a parte inicial do programa, já tentando deixar indicado todas as funções que serão utilizadas, para desenvolvê-las amanhã. Até o momento, criei a parte de identificação dos jogadores: se serão 2 jogadores, ou apenas um que jogará contra o computador; o nome dos jogadores; qual marcador (X ou O) eles escolhem. É feito então um sorteio que define quem será o primeiro a jogar.
+	
