@@ -50,29 +50,27 @@ function createPlayers(playersAmount, player1, player2)
 	player2.name = playerName
 	player2.marker = playerMarker
 
-	-- !!!!!!!!!!!!!!!! DUVIDA: qual seria o problema de usar playerMarker e playerName para construir tanto player1 quanto player2? !!!!!!!!!!!!!
-
 	print("\n---------------------------")
 	print("Sorting player for the first round...")
 	first = sortFirstPlayer()
-	if first == 1 then
-		player1.turn = 1
-		player2.turn = 2
-		print("First player: ")
-		showPlayerInfo(player1)
-		print("Second player: ")
-		showPlayerInfo(player2)
-	else
-		player1.turn = 2
-		player2.turn = 1
-		print("First player: ")
-		showPlayerInfo(player2)
-		print("Second player: ")
-		showPlayerInfo(player1)
+
+	if first == 2 then
+		auxiliarName = player1.name
+		auxiliarMarker = player1.marker
+		player1.name = player2.name
+		player1.marker = player2.marker
+		player2.name = auxiliarName
+		player2.marker = auxiliarMarker
 	end
+	
+	print("First player: ")
+	showPlayerInfo(player1)
+	print("Second player: ")
+	showPlayerInfo(player2)
 end
 
 function showPlayerInfo(player)
+
 	print("\tPlayer name: " .. player.name)
 	print("\tPlayer marker: " .. player.marker)
 end
@@ -119,7 +117,6 @@ end
 
 function printBoard(board)
 	
-	print("---------------------------")
 	print("-------")
 	for line=1,3 do
 		for column=1,3 do
@@ -129,7 +126,6 @@ function printBoard(board)
 		io.write("|\n")
 	end
 	print("-------")
-	print("---------------------------")
 end
 
 function checkEndOfGame(board)
@@ -148,7 +144,14 @@ function computerMove(board)
 	-- body
 end
 
+function playerMove(board)
+	-- body
+end
+
+---------------------------------------------------------
 --Main program
+---------------------------------------------------------
+
 local playersAmount
 local validPlayersAmount
 local filledXPositions
@@ -156,10 +159,15 @@ local filledOPositions
 local player1 = {}
 local player2 = {}
 local board = {}
+local endOfGame = false
+local round = 0
 
 print("------------------------------------------------")
 print("------------------------------------------------")
 print("\n** WELCOME TO THE TIC-TAC-TOE CLASSIC GAME! **\n")
+
+
+--User register
 
 print("How many players? (1 or 2)")
 io.write(">> ")
@@ -174,10 +182,25 @@ while not validPlayersAmount do
 end
 
 createPlayers(playersAmount, player1, player2)
+
 initializeEmptyBoard(board)
+
 
 --Starts game
 
+--while not endOfGame do
+	print("---------------------------")
+	round = round + 1
+	if (round % 2) == 1	then
+		print("-------- Rodada " .. round .. " ---------")
+		print("Vez de: " .. player1.name)
 
+
+
+	end
+
+
+--	endOfGame = checkEndOfGame(board)
+--end
 
 printBoard(board)
