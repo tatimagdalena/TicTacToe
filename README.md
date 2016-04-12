@@ -1,10 +1,20 @@
-=============
-- Aluna: Tatiana de Oliveira Magdalena
-- Matrícula: 1321440
-- Professor: Júlio César Sampaio
-- Matéria: Princípios de Engenharia de Software
+#Tic Tac Toe (Jogo da Velha)
 
-Tic Tac Toe (Jogo da Velha)
+####Titulo:
+Tic Tac Toe
+
+####Autor:
+Tatiana de Oliveira Magdalena - 1321440<br/>
+
+####Data:
+10/04/2016
+
+####Versão:
+v1.0
+
+####Indicador de conteúdo:
+292 linhas de código
+
 ==============
 
 ==============
@@ -29,11 +39,6 @@ Para executar o programa, siga os seguintes passos:
 	- Abra o terminal;
 	- Navegue ao diretório do trabalho pelo terminal;
 	- Escreva no terminal o comando "lua tictactoe.lua"
-
-==============
-Utilização do programa:
-
-	- A definir.
 
 ==============
 Link para gerenciamento de versão:

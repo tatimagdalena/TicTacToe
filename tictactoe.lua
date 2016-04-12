@@ -1,6 +1,8 @@
 ------------------------------------------------
 --	TicTacToe
 --	Created by Tatiana de Oliveira Magdalena (1321440) on 10/04/2016.
+--  v1.0
+--  This document contains 292 code lines
 ------------------------------------------------
 
 function createPlayers(playersAmount, player1, player2)
