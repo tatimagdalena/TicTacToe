@@ -107,71 +107,130 @@ end
 
 function initializeEmptyBoard(board)
 	
-    for line=1,3 do
-      board[line] = {}     -- create a new row
-      for column=1,3 do
-        board[line][column] = "_"
-      end
+    for position=1,9 do
+      board[position] = "_"
     end
 end
 
 function printBoard(board)
 	
 	print("-------")
-	for line=1,3 do
-		for column=1,3 do
-			io.write("|")
-			io.write(board[line][column])
+	for position = 1,9 do
+		io.write("|")
+		io.write(board[position])
+		if position%3 == 0 then
+			io.write("|\n")
 		end
-		io.write("|\n")
+	end
+	print("-------")
+end
+
+function printIndexedEmptyBoard(board)
+
+	print("-------")
+	for position = 1,9 do
+		io.write("|")
+		io.write(position)
+		if position%3 == 0 then
+			io.write("|\n")
+		end
 	end
 	print("-------")
 end
 
 function checkEndOfGame(board)
-	-- body
-end
 
-function fillPosition(board, marker, position)
-	-- body
+	if board[1]~="_" and (board[1] == board[2]) and (board[2] == board[3]) then
+		return board[1]
+	elseif board[1]~="_" and (board[1] == board[4]) and (board[4] == board[7]) then
+		return board[1]
+	elseif board[3]~="_" and (board[3] == board[6]) and (board[6] == board[9]) then
+		return board[3]
+	elseif board[7]~="_" and (board[7] == board[8]) and (board[8] == board[9]) then
+		return board[7]
+	elseif board[1]~="_" and (board[1] == board[5]) and (board[5] == board[9]) then
+		return board[1]
+	elseif board[3]~="_" and (board[3] == board[5]) and (board[5] == board[7]) then
+		return board[3]
+	elseif board[1]~="_" and board[2]~="_" and board[3]~="_" and board[4]~="_" and board[5]~="_" and board[6]~="_" and board[7]~="_" and board[8]~="_" and board[9]~="_" then 
+		return 0
+	else
+		return -1
+	end
 end
 
 function isPositionEmpty(board, position)
-	-- body
+
+	if position ~=nil and position>=1 and position<=9 and board[position] == "_" then
+		return true
+	else
+		return false
+	end
+end
+
+function fillPosition(board, marker, position)
+
+	board[position] = marker
 end
 
 function computerMove(board)
-	-- body
+
+	local chosenPosition = 0
+	local validPosition = false
+
+	math.randomseed(os.time())
+	while not validPosition do
+		chosenPosition = math.random(9)
+		validPosition = isPositionEmpty(board, chosenPosition)
+	end
+	return chosenPosition
 end
 
 function playerMove(board)
-	-- body
+
+	local validPosition
+	local chosenPosition
+
+	print("\nChoose a position (1-9):")
+	io.write(">> ")
+	validPosition = false
+	while not validPosition do
+	chosenPosition = tonumber(io.read())
+	validPosition = isPositionEmpty(board, chosenPosition)
+		if not validPosition then
+			print("Please, enter the index of an empty space (from 1 to 9)")
+			io.write(">> ")
+		end
+	end
+
+	return chosenPosition
 end
+
+
 
 ---------------------------------------------------------
 --Main program
 ---------------------------------------------------------
 
-local playersAmount
-local validPlayersAmount
-local filledXPositions
-local filledOPositions
+local playersAmount = 0
+local validPlayersAmount = false
 local player1 = {}
 local player2 = {}
 local board = {}
-local endOfGame = false
+local winnerMarker = -1
 local round = 0
+local chosenPosition = 0
 
 print("------------------------------------------------")
 print("------------------------------------------------")
 print("\n** WELCOME TO THE TIC-TAC-TOE CLASSIC GAME! **\n")
 
 
---User register
+
+--Players register
 
 print("How many players? (1 or 2)")
 io.write(">> ")
-validPlayersAmount = false
 while not validPlayersAmount do
 	playersAmount = tonumber(io.read())
 	validPlayersAmount = validatePlayersAmount(playersAmount)
@@ -183,24 +242,53 @@ end
 
 createPlayers(playersAmount, player1, player2)
 
-initializeEmptyBoard(board)
 
 
 --Starts game
 
---while not endOfGame do
-	print("---------------------------")
-	round = round + 1
+initializeEmptyBoard(board)
+printIndexedEmptyBoard(board)
+
+while winnerMarker == -1 do
+
+	local roundPlayer
+
 	if (round % 2) == 1	then
-		print("-------- Rodada " .. round .. " ---------")
-		print("Vez de: " .. player1.name)
-
-
-
+		roundPlayer = player1
+	else
+		roundPlayer = player2
 	end
 
+	print("---------------------------")
+	round = round + 1
+	print("-------- Round " .. round .. " ---------")
+	print(roundPlayer.name .. "'s turn.")
 
---	endOfGame = checkEndOfGame(board)
---end
+	if roundPlayer.name ~= "Computer" then
+		chosenPosition = playerMove(board)
+	else
+		chosenPosition = computerMove(board)
+	end
 
-printBoard(board)
+	fillPosition(board, roundPlayer.marker, chosenPosition)
+
+	printBoard(board)
+
+	winnerMarker = checkEndOfGame(board)
+end
+
+	
+
+--Announces winner
+
+if winnerMarker == 0 then
+	print("End of game: IT'S A DRAW!!!")
+elseif player1.marker == winnerMarker then
+	print("End of game: " .. player1.name .. " wins!!!")
+else
+	print("End of game: " .. player2.name .. " wins!!!")
+end
+
+
+
+
