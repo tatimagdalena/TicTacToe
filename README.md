@@ -13,7 +13,7 @@ Tatiana de Oliveira Magdalena - 1321440<br/>
 v1.0
 
 ####Indicador de conteúdo:
-292 linhas de código
+375 linhas de código
 
 ==============
 
