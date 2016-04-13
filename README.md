@@ -17,35 +17,21 @@ No código.
 
 ####Regra 3
 
-|validatePlayersAmount()
-
-|createPlayers()
-
-|--|validateMarkerType()
-
-|--|sortFirstPlayer()
-
-|--|showPlayerInfo()
-
-|playGame()
-
-|--|initializeEmptyBoard()
-
-|--|playerMove()
-
-|----|isPositionEmpty()
-
-|--|computerMove()
-
-|----|isPositionEmpty()
-
-|--|fillPosition()
-
-|--|printBoard()
-
-|--|checkEndOfGame()
-
-|showTheWinner()
+-|validatePlayersAmount()
+-|createPlayers()
+-|--|validateMarkerType()
+-|--|sortFirstPlayer()
+-|--|showPlayerInfo()
+-|playGame()
+-|--|initializeEmptyBoard()
+-|--|playerMove()
+-|----|isPositionEmpty()
+-|--|computerMove()
+-|----|isPositionEmpty()
+-|--|fillPosition()
+-|--|printBoard()
+-|--|checkEndOfGame()
+-|showTheWinner()
 
 ####Regra 4
 No código.
@@ -63,7 +49,7 @@ O livro diário está no arquivo Diario.txt.
 Objetivos do programa:
 
 	- Jogo da velha clássico.
-    - Permite dois jogadores, ou um contra o computador.
+	- Permite dois jogadores, ou um contra o computador.
 
 ==============
 
