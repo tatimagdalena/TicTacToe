@@ -13,3 +13,6 @@
 	
 11/04/2016 (Dia 4):
 	Terminei a parte do código do programa, passando para a documentação do mesmo. Atualizei também o readme.md levando em consideração as 6 regras da disciplina.
+
+13/04/2016 (Dia 5):
+	Alterei o readme para ter a arquitetura do código, alterando algumas funções para tentar ao máximo obedecer a regra da divisão em no mínimo 3 e no máximo 6 partes.

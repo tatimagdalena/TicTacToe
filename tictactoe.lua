@@ -1,19 +1,35 @@
 ------------------------------------------------
 --	TicTacToe
 --	Created by Tatiana de Oliveira Magdalena (1321440) on 10/04/2016.
---  v1.0
---  This document contains 375 code lines
+--	v1.0
+--	This document contains 398 code lines
 ------------------------------------------------
+
+function validatePlayersAmount(players)
+------------------------------------------------
+-- Checks if the user chose a valid amount of players (1 or 2).
+-- Parameter:
+--		players: the amount of players chosen.
+-- Return:
+--		true, if it is a valid amount.
+--		false, if not.
+-----------------------------------------------
+	if players ~=nil and (players == 1 or players == 2) then
+		return true
+	else
+		return false
+	end
+end
 
 function createPlayers(playersAmount, player1, player2)
 ------------------------------------------------
 -- Create both players with a name and a marker that will be
 -- used by her/him on the board.
 -- Parameters:
---    playersAmount: 1, if there is one real player versus the computer,
---					 2, if there are 2 real players.
---	  player1: 		 an empty table to be filled with player 1 information.
---	  player2: 		 an empty table to be filled with player 2 information.
+--		playersAmount: 1, if there is one real player versus the computer,
+--					   2, if there are 2 real players.
+--		player1: an empty table to be filled with player 1 information.
+--		player2: an empty table to be filled with player 2 information.
 -----------------------------------------------
 	local playerName
 	local playerMarker
@@ -79,14 +95,20 @@ function createPlayers(playersAmount, player1, player2)
 	showPlayerInfo(player2)
 end
 
-function showPlayerInfo(player)
+function validateMarkerType(marker)
 ------------------------------------------------
--- Displays a player's info on the console.
--- Parameters:
---    player: the player to be displayed.
------------------------------------------------
-	print("\tPlayer name: " .. player.name)
-	print("\tPlayer marker: " .. player.marker)
+-- Checks if the user chose a valid marker type ("X" or "O).
+-- Parameter:
+--		marker: the marker chosen.
+-- Return:
+--		true, if it is a valid marker.
+--		false, if not.
+-----------------------------------------------	
+	if marker ~=nil and (marker == "X" or marker == "O") then
+		return true
+	else
+		return false
+	end
 end
 
 function sortFirstPlayer()
@@ -106,36 +128,67 @@ function sortFirstPlayer()
 	end
 end
 
-function validatePlayersAmount(players)
+function showPlayerInfo(player)
 ------------------------------------------------
--- Checks if the user chose a valid amount of players (1 or 2).
--- Parameter:
---		players: the amount of players chosen.
--- Return:
---		true, if it is a valid amount.
---		false, if not.
+-- Displays a player's info on the console.
+-- Parameters:
+--		player: the player to be displayed.
 -----------------------------------------------
-	if players ~=nil and (players == 1 or players == 2) then
-		return true
-	else
-		return false
-	end
+	print("\tPlayer name: " .. player.name)
+	print("\tPlayer marker: " .. player.marker)
 end
 
-function validateMarkerType(marker)
+function playGame(board, player1, player2)
 ------------------------------------------------
--- Checks if the user chose a valid marker type ("X" or "O).
+-- Makes the plays of the game, alterning between player1 and player2.
 -- Parameter:
---		marker: the marker chosen.
+--		board: an empty table, in which the game will be played.
+--		player1: the player for the first round.
+--		player2: the player for the second round.
 -- Return:
---		true, if it is a valid marker.
---		false, if not.
------------------------------------------------	
-	if marker ~=nil and (marker == "X" or marker == "O") then
-		return true
-	else
-		return false
+--		"X", if the player with marker "X" won (there is a line of "X" through the board),
+--		"O", if the player with marker "O" won (there is a line of "O" through the board),
+--		0  , if there was a draw (no empty spaces and nobody won),
+--		-1 , if the game isn't over yet.
+-----------------------------------------------
+
+	local round = 0
+	local chosenPosition = 0
+	local winnerMarker = -1
+
+	initializeEmptyBoard(board)
+
+	while winnerMarker == -1 do
+
+		local roundPlayer
+
+		round = round + 1
+
+		if (round % 2) == 1	then
+			roundPlayer = player1
+		else
+			roundPlayer = player2
+		end
+
+		print("---------------------------")
+		print("-------- Round " .. round .. " ---------")
+		print(roundPlayer.name .. "'s turn.")
+
+		
+
+		if roundPlayer.name ~= "Computer" then
+			chosenPosition = playerMove(board)
+		else
+			chosenPosition = computerMove(board)
+		end
+
+		fillPosition(board, roundPlayer.marker, chosenPosition)
+		printBoard(board)
+
+		winnerMarker = checkEndOfGame(board)
 	end
+
+	return winnerMarker
 end
 
 function initializeEmptyBoard(board)
@@ -148,18 +201,12 @@ function initializeEmptyBoard(board)
     for position=1,9 do
       board[position] = "_"
     end
-end
 
-function printBoard(board)
-------------------------------------------------
--- Displays the game board on the console.
--- Parameters:
---    board: the board been used by the game.
------------------------------------------------
-	print("-------")
+    --The positions are printed in order to show the player how to choose.
+    print("-------")
 	for position = 1,9 do
 		io.write("|")
-		io.write(board[position])
+		io.write(position)
 		if position%3 == 0 then
 			io.write("|\n")
 		end
@@ -167,17 +214,91 @@ function printBoard(board)
 	print("-------")
 end
 
-function printIndexedEmptyBoard(board)
+function playerMove(board)
 ------------------------------------------------
--- Displays the game board on the console, each position filled
--- with it's index, to show the player how to choose.
+-- Gets a play for a real player, between the empty positions on the board.
+-- Parameter:
+--		board: the board been used by the game.
+-- Return:
+--		chosenPosition: the position chosen by a real player
+-----------------------------------------------
+	local validPosition
+	local chosenPosition
+
+	print("\nChoose a position (1-9):")
+	io.write(">> ")
+	validPosition = false
+	while not validPosition do
+	chosenPosition = tonumber(io.read())
+	validPosition = isPositionEmpty(board, chosenPosition)
+		if not validPosition then
+			print("Please, enter the index of an empty space (from 1 to 9)")
+			io.write(">> ")
+		end
+	end
+
+	return chosenPosition
+end
+
+function computerMove(board)
+------------------------------------------------
+-- Creates a random play for a computer player, between the empty positions on the board.
+-- Parameter:
+--		board: the board been used by the game.
+-- Return:
+--		chosenPosition: the position chosen randomly by a computer player
+-----------------------------------------------
+	local chosenPosition = 0
+	local validPosition = false
+
+	math.randomseed(os.time())
+	while not validPosition do
+		chosenPosition = math.random(9)
+		validPosition = isPositionEmpty(board, chosenPosition)
+	end
+	return chosenPosition
+end
+
+function isPositionEmpty(board, position)
+------------------------------------------------
+-- Checks if a board position is empty.
+-- Parameter:
+--		board: the board been used by the game.
+--		position: the position to be analized.
+-- Return:
+--		true, if the position is empty (which is represented by "_")
+--		false, if not.
+-----------------------------------------------
+	if position ~=nil and position>=1 and position<=9 and board[position] == "_" then
+		return true
+	else
+		return false
+	end
+end
+
+function fillPosition(board, marker, position)
+------------------------------------------------
+-- Puts a marker into a chosen board position.
+-- Parameter:
+--		board: the board been used by the game.
+--		marker: the marker to be writen.
+--		position: the position in which to write the marker.
+-----------------------------------------------
+
+	board[position] = marker
+end
+
+
+function printBoard(board)
+------------------------------------------------
+-- Displays the game board on the console.
 -- Parameters:
---    board: the board been used by the game.
+--		board: the board been used by the game.
 -----------------------------------------------
 	print("-------")
 	for position = 1,9 do
 		io.write("|")
-		io.write(position)
+		io.write(board[position])
 		if position%3 == 0 then
 			io.write("|\n")
 		end
@@ -215,78 +336,23 @@ function checkEndOfGame(board)
 	end
 end
 
-function isPositionEmpty(board, position)
+function showTheWinner(player1, player2, winnerMarker)
 ------------------------------------------------
--- Checks if a board position is empty.
--- Parameter:
+-- Displays the name of the winner.
+-- Parameters:
 --		board: the board been used by the game.
---		position: the position to be analized.
--- Return:
---		true, if the position is empty (which is represented by "_")
---		false, if not.
+--		player1: the player for the first round.
+--		player2: the player for the second round.
 -----------------------------------------------
-	if position ~=nil and position>=1 and position<=9 and board[position] == "_" then
-		return true
+
+	if winnerMarker == 0 then
+	print("End of game: IT'S A DRAW!!!")
+	elseif player1.marker == winnerMarker then
+		print("End of game: " .. player1.name .. " wins!!!")
 	else
-		return false
-	end
-end
-
-function fillPosition(board, marker, position)
-------------------------------------------------
--- Puts a marker into a chosen board position.
--- Parameter:
---		board: the board been used by the game.
---		marker: the marker to be writen.
---		position: the position in which to write the marker.
------------------------------------------------
-
-	board[position] = marker
-end
-
-function computerMove(board)
-------------------------------------------------
--- Creates a random play for a computer player, between the empty positions on the board.
--- Parameter:
---		board: the board been used by the game.
--- Return:
---		chosenPosition: the position chosen randomly by a computer player
------------------------------------------------
-	local chosenPosition = 0
-	local validPosition = false
-
-	math.randomseed(os.time())
-	while not validPosition do
-		chosenPosition = math.random(9)
-		validPosition = isPositionEmpty(board, chosenPosition)
-	end
-	return chosenPosition
-end
-
-function playerMove(board)
-------------------------------------------------
--- Gets a play for a real player, between the empty positions on the board.
--- Parameter:
---		board: the board been used by the game.
--- Return:
---		chosenPosition: the position chosen by a real player
------------------------------------------------
-	local validPosition
-	local chosenPosition
-
-	print("\nChoose a position (1-9):")
-	io.write(">> ")
-	validPosition = false
-	while not validPosition do
-	chosenPosition = tonumber(io.read())
-	validPosition = isPositionEmpty(board, chosenPosition)
-		if not validPosition then
-			print("Please, enter the index of an empty space (from 1 to 9)")
-			io.write(">> ")
-		end
+		print("End of game: " .. player2.name .. " wins!!!")
 	end
 
-	return chosenPosition
 end
 
 
@@ -303,14 +369,10 @@ local player1 = {}
 local player2 = {}
 local board = {}
 local winnerMarker = -1
-local round = 0
-local chosenPosition = 0
 
 print("------------------------------------------------")
 print("------------------------------------------------")
 print("\n** WELCOME TO THE TIC-TAC-TOE CLASSIC GAME! **\n")
-
-
 
 --Players register
 
@@ -327,49 +389,10 @@ end
 
 createPlayers(playersAmount, player1, player2)
 
-
-
 --Starts game
 
-initializeEmptyBoard(board)
-printIndexedEmptyBoard(board)
-
-while winnerMarker == -1 do
-
-	local roundPlayer
-
-	if (round % 2) == 1	then
-		roundPlayer = player1
-	else
-		roundPlayer = player2
-	end
-
-	print("---------------------------")
-	round = round + 1
-	print("-------- Round " .. round .. " ---------")
-	print(roundPlayer.name .. "'s turn.")
-
-	if roundPlayer.name ~= "Computer" then
-		chosenPosition = playerMove(board)
-	else
-		chosenPosition = computerMove(board)
-	end
-
-	fillPosition(board, roundPlayer.marker, chosenPosition)
-
-	printBoard(board)
-
-	winnerMarker = checkEndOfGame(board)
-end
-
-	
+winnerMarker = playGame(board, player1, player2)
 
 --Announces winner
 
-if winnerMarker == 0 then
-	print("End of game: IT'S A DRAW!!!")
-elseif player1.marker == winnerMarker then
-	print("End of game: " .. player1.name .. " wins!!!")
-else
-	print("End of game: " .. player2.name .. " wins!!!")
-end
+showTheWinner(player1, player2, winnerMarker)

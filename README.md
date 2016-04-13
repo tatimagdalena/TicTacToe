@@ -1,19 +1,47 @@
 #Tic Tac Toe (Jogo da Velha)
 
-####Titulo:
-Tic Tac Toe
+####Regra 1
 
-####Autor:
-Tatiana de Oliveira Magdalena - 1321440<br/>
+Título: Tic Tac Toe
 
-####Data:
-10/04/2016
+Autor: Tatiana de Oliveira Magdalena - 1321440
 
-####Versão:
-v1.0
+Data: 10/04/2016
 
-####Indicador de conteúdo:
-375 linhas de código
+Versão: v1.0
+
+Indicador de conteúdo: 398 linhas de código
+
+####Regra 2
+No código.
+
+####Regra 3
+
+|validatePlayersAmount()
+|createPlayers()
+|--|validateMarkerType()
+|--|sortFirstPlayer()
+|--|showPlayerInfo()
+|playGame()
+|--|initializeEmptyBoard()
+|--|playerMove()
+|----|isPositionEmpty()
+|--|computerMove()
+|----|isPositionEmpty()
+|--|fillPosition()
+|--|printBoard()
+|--|checkEndOfGame()
+|showTheWinner()
+
+####Regra 4
+No código.
+
+####Regra 5
+No código.
+
+####Regra 6
+O livro diário está no arquivo Diario.txt.
+
 
 ==============
 
