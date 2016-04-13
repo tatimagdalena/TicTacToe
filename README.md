@@ -17,21 +17,21 @@ No código.
 
 ####Regra 3
 
--|validatePlayersAmount()
--|createPlayers()
--|--|validateMarkerType()
--|--|sortFirstPlayer()
--|--|showPlayerInfo()
--|playGame()
--|--|initializeEmptyBoard()
--|--|playerMove()
--|----|isPositionEmpty()
--|--|computerMove()
--|----|isPositionEmpty()
--|--|fillPosition()
--|--|printBoard()
--|--|checkEndOfGame()
--|showTheWinner()
+|validatePlayersAmount() <br />
+|createPlayers() <br />
+|--|validateMarkerType() <br />
+|--|sortFirstPlayer() <br />
+|--|showPlayerInfo() <br />
+|playGame() <br />
+|--|initializeEmptyBoard() <br />
+|--|playerMove() <br />
+|----|isPositionEmpty() <br />
+|--|computerMove() <br />
+|----|isPositionEmpty() <br />
+|--|fillPosition() <br />
+|--|printBoard() <br />
+|--|checkEndOfGame() <br />
+|showTheWinner()
 
 ####Regra 4
 No código.
