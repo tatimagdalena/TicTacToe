@@ -10,7 +10,7 @@ Data: 10/04/2016
 
 Versão: v1.0
 
-Indicador de conteúdo: 398 linhas de código
+Indicador de conteúdo: 425 linhas de código
 
 ####Regra 2
 No código.

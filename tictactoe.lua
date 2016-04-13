@@ -2,7 +2,7 @@
 --	TicTacToe
 --	Created by Tatiana de Oliveira Magdalena (1321440) on 10/04/2016.
 --	v1.0
---	This document contains 398 code lines
+--	This document contains 425 code lines
 ------------------------------------------------
 
 function validatePlayersAmount(players)
@@ -33,7 +33,7 @@ function createPlayers(playersAmount, player1, player2)
 -----------------------------------------------
 	local playerName
 	local playerMarker
-	local validMarker
+	local validMarker = false
 	local first
 
 	print("\n** Player 1 **")
@@ -43,8 +43,10 @@ function createPlayers(playersAmount, player1, player2)
 
 	print("Which marker do you choose? (X or O)")
 	io.write(">> ")
-	validMarker = false
+
+	--Marker is not valid yet (not X nor O) - validMarker is false; playerMarker is empty.
 	while not validMarker do
+		--The player inserts a letter from the keyboard.
 		playerMarker = io.read()
 		validMarker = validateMarkerType(playerMarker)
 		if not validMarker then
@@ -52,6 +54,8 @@ function createPlayers(playersAmount, player1, player2)
 			io.write(">> ")
 		end
 	end
+	--validMarker is true; playerMarker is either X or O.
+
 	player1.name = playerName
 	player1.marker = playerMarker
 
@@ -158,7 +162,10 @@ function playGame(board, player1, player2)
 
 	initializeEmptyBoard(board)
 
+	--The game is not over and there is no winner yet, so there is no winner marker, which is represented by winnerMarker = -1.
 	while winnerMarker == -1 do
+
+		--The game is still going on (another round is initialized).
 
 		local roundPlayer
 
@@ -174,8 +181,6 @@ function playGame(board, player1, player2)
 		print("-------- Round " .. round .. " ---------")
 		print(roundPlayer.name .. "'s turn.")
 
-		
-
 		if roundPlayer.name ~= "Computer" then
 			chosenPosition = playerMove(board)
 		else
@@ -187,6 +192,7 @@ function playGame(board, player1, player2)
 
 		winnerMarker = checkEndOfGame(board)
 	end
+	--The game was over, and there is a winner or the game was a draw; winnerMarker is X or O, in case there was a winner, or winnerMarker is 0, in case there was a draw.
 
 	return winnerMarker
 end
@@ -222,20 +228,24 @@ function playerMove(board)
 -- Return:
 --		chosenPosition: the position chosen by a real player
 -----------------------------------------------
-	local validPosition
+	local validPosition = false
 	local chosenPosition
 
 	print("\nChoose a position (1-9):")
 	io.write(">> ")
 	validPosition = false
+
+	--Position is not valid yet (validPosition is false) and chosenPosition is empty.
 	while not validPosition do
-	chosenPosition = tonumber(io.read())
-	validPosition = isPositionEmpty(board, chosenPosition)
+		--The player chooses a position, writing a number from the keyboard.
+		chosenPosition = tonumber(io.read())
+		validPosition = isPositionEmpty(board, chosenPosition)
 		if not validPosition then
 			print("Please, enter the index of an empty space (from 1 to 9)")
 			io.write(">> ")
 		end
 	end
+	--There position chosen is valid (validPosition is true) and chosenPosition is a number from 1 to 9 representing a position that was empty.
 
 	return chosenPosition
 end
@@ -252,10 +262,15 @@ function computerMove(board)
 	local validPosition = false
 
 	math.randomseed(os.time())
+
+	--Position is not valid yet (validPosition is false) and chosenPosition is empty.
 	while not validPosition do
+		--The position, a number from 1 to 9, is chosen randomly to the computer
 		chosenPosition = math.random(9)
 		validPosition = isPositionEmpty(board, chosenPosition)
 	end
+	--There position chosen is valid (validPosition is true) and chosenPosition is a number from 1 to 9 representing a position that was empty.
+
 	return chosenPosition
 end
 
@@ -329,6 +344,8 @@ function checkEndOfGame(board)
 		return board[1]
 	elseif board[3]~="_" and (board[3] == board[5]) and (board[5] == board[7]) then
 		return board[3]
+	elseif board[4]~="_" and (board[4] == board[5]) and (board[5] == board[6]) then
+		return board[4]
 	elseif board[1]~="_" and board[2]~="_" and board[3]~="_" and board[4]~="_" and board[5]~="_" and board[6]~="_" and board[7]~="_" and board[8]~="_" and board[9]~="_" then 
 		return 0
 	else
@@ -374,11 +391,16 @@ print("------------------------------------------------")
 print("------------------------------------------------")
 print("\n** WELCOME TO THE TIC-TAC-TOE CLASSIC GAME! **\n")
 
+---------------------
 --Players register
+---------------------
 
 print("How many players? (1 or 2)")
 io.write(">> ")
+
+--The players amount is not valid yet (validPlayersAmount is false) and playersAmount is zero.
 while not validPlayersAmount do
+	--The user indicates how many real players there will be, writing a number from the keyboard.
 	playersAmount = tonumber(io.read())
 	validPlayersAmount = validatePlayersAmount(playersAmount)
 	if not validPlayersAmount then
@@ -386,13 +408,18 @@ while not validPlayersAmount do
 		io.write(">> ")
 	end
 end
+--The players amount is a valid value (validPlayersAmount is true) and playersAmount is either 1 or 2.
 
 createPlayers(playersAmount, player1, player2)
 
+---------------------
 --Starts game
+---------------------
 
 winnerMarker = playGame(board, player1, player2)
 
+---------------------
 --Announces winner
+---------------------
 
 showTheWinner(player1, player2, winnerMarker)

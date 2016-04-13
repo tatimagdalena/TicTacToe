@@ -7,7 +7,7 @@
 10/04/2016 (Dia 3):
 	Passei um bom tempo tentando decidir o que fazer como programa. Optei por um jogo bem conhecido por todos, o “Jogo da Velha” (ou Tic Tac Toe, em inglês).
 	Com o programa definido, criei um repositório no github para controle de versão. O commit inicial possui um arquivo tictactoe.lua, e um arquivo README.md, com algumas informações mas ainda sem as regras de utilização do programa.
-	Como foi a primeira vez que de fato comecei a fazer um código em Lua, inicialmente demorei um pouco para coisas simples. Uma dificuldade foi na hora de ler um número (opção do menu) e validá-lo, pois tentando ler com io.read("*number") o código estava entrando em um loop eterno. Após pesquisar, troquei para tonumber(io.read()) e funcionou.
+	Como foi a primeira vez que de fato comecei a fazer um código em Lua, inicialmente demorei um pouco para coisas simples. Uma dificuldade foi na hora de ler um número e validá-lo, pois tentando ler com io.read("*number") o código estava entrando em um loop eterno. Após pesquisar, troquei para tonumber(io.read()) e funcionou.
 	Já sabendo o que o programa ia fazer (um jogo da velha clássico), pude já estruturar as partes do programa - os cabeçalhos das possíveis funções a serem utilizadas foram criados, pensando na estrutura de divisão que mais proximamente resultasse no mínimo 3 partes e no máximo 6 partes. Os nomes criados, tanto para as funções quanto para variáveis, foram criados de forma simples e auto-explicativos quanto a seu propósito.
 	Até o momento, criei a parte de identificação dos jogadores: se serão 2 jogadores, ou apenas um que jogará contra o computador; o nome dos jogadores; qual marcador (X ou O) eles escolhem. É feito então um sorteio que define quem será o primeiro a jogar.
 	
@@ -15,4 +15,4 @@
 	Terminei a parte do código do programa, passando para a documentação do mesmo. Atualizei também o readme.md levando em consideração as 6 regras da disciplina.
 
 13/04/2016 (Dia 5):
-	Alterei o readme para ter a arquitetura do código, alterando algumas funções para tentar ao máximo obedecer a regra da divisão em no mínimo 3 e no máximo 6 partes.
+	Alterei o readme para ter a arquitetura do código, alterando algumas funções para tentar ao máximo obedecer a regra da divisão em no mínimo 3 e no máximo 6 partes. Acrescentei ao código as pré e pós condições dos loops. Ao fazer isso, percebi que havia esquecido de uma condição para que o jogo fosse ganho, que é ter X’s ou O’s na linha do meio, então acrescentei essa condição.
