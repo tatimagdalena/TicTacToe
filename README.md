@@ -18,19 +18,33 @@ No código.
 ####Regra 3
 
 |validatePlayersAmount()
+
 |createPlayers()
+
 |--|validateMarkerType()
+
 |--|sortFirstPlayer()
+
 |--|showPlayerInfo()
+
 |playGame()
+
 |--|initializeEmptyBoard()
+
 |--|playerMove()
+
 |----|isPositionEmpty()
+
 |--|computerMove()
+
 |----|isPositionEmpty()
+
 |--|fillPosition()
+
 |--|printBoard()
+
 |--|checkEndOfGame()
+
 |showTheWinner()
 
 ####Regra 4
