@@ -5,22 +5,14 @@ Professor: Julio Cesar Sampaio
 #### Grau: 10.0/10.0
 ---
 
-####Regra 1
+Título: Tic Tac Toe<br/>
+Autor: Tatiana de Oliveira Magdalena - 1321440<br/>
+Data: 10/04/2016<br/>
+Versão: v1.0<br/>
+Indicador de conteúdo: 425 linhas de código<br/><br/>
+O livro diário está no arquivo Diario.txt.<br/>
 
-Título: Tic Tac Toe
-
-Autor: Tatiana de Oliveira Magdalena - 1321440
-
-Data: 10/04/2016
-
-Versão: v1.0
-
-Indicador de conteúdo: 425 linhas de código
-
-####Regra 2
-No código.
-
-####Regra 3
+####Arquitetura
 
 |validatePlayersAmount() <br />
 |createPlayers() <br />
@@ -37,16 +29,6 @@ No código.
 |--|printBoard() <br />
 |--|checkEndOfGame() <br />
 |showTheWinner()
-
-####Regra 4
-No código.
-
-####Regra 5
-No código.
-
-####Regra 6
-O livro diário está no arquivo Diario.txt.
-
 
 ==============
 
