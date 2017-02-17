@@ -1,4 +1,9 @@
 #Tic Tac Toe (Jogo da Velha)
+🎓College assignment / Trabalho para Princípios de Engenharia de Software - PUC-Rio<br/>
+---
+Professor: Julio Cesar Sampaio
+#### Grau: 10.0/10.0
+---
 
 ####Regra 1
 
